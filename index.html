@@ -1,51 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>MechMind-dwv Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MechMind-dwv | Supervisión Automotriz Inteligente</title>
+    
+    <!-- CDNs con SRI (Seguridad) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-Sl2X3zCk4zJ9ZNL1WQJYdG9T7Q2K7RV2zT7F7QJX9Xg1k25O8C6lYJZ5c5I5F5" crossorigin="anonymous"></script>
+    
+    <!-- Estilos personalizados -->
     <style>
-        body { font-family: Arial; background: #f4f4f9; }
-        .dashboard { display: flex; flex-wrap: wrap; }
-        .card { background: white; margin: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+        .diagnostic-card {
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .diagnostic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .commit-item {
+            border-bottom: 1px dashed #eee;
+            padding: 0.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <div class="card">
-            <h2>🚀 Commits Recientes</h2>
-            <div id="commits"></div>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://via.placeholder.com/30" alt="Logo" class="d-inline-block align-top me-2">
+                MechMind-dwv
+            </a>
+            <span class="badge bg-warning text-dark">v2.1.0</span>
         </div>
-        <div class="card">
-            <h2>📊 Diagnóstico (Ejemplo)</h2>
-            <canvas id="diagnosticChart" width="300" height="200"></canvas>
-        </div>
-    </div>
+    </nav>
 
+    <!-- Contenido principal -->
+    <main class="container">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="display-5 fw-bold">Panel de Control Automotriz</h1>
+                <p class="lead">Monitoreo en tiempo real con integración GitHub</p>
+            </div>
+        </div>
+        
+        <div class="row g-4 dashboard-grid">
+            <!-- Tarjeta de Commits -->
+            <div class="col-md-6">
+                <div class="card h-100 diagnostic-card">
+                    <div class="card-body">
+                        <h2 class="card-title h5 d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit me-2">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="1.05" y1="12" x2="7" y2="12"></line>
+                                <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
+                            </svg>
+                            Actividad Reciente
+                        </h2>
+                        <div id="commits" class="mt-3">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjeta de Diagnóstico -->
+            <div class="col-md-6">
+                <div class="card h-100 diagnostic-card">
+                    <div class="card-body">
+                        <h2 class="card-title h5 d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity me-2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            Diagnóstico del Vehículo
+                        </h2>
+                        <canvas id="diagnosticChart" class="w-100" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 MechBot-2x | Sistema de Monitoreo Automotriz</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
     <script>
-        // Gráfico de diagnóstico (simulado)
-        const ctx = document.getElementById('diagnosticChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Motor', 'Frenos', 'Batería', 'Líquidos'],
-                datasets: [{
-                    label: 'Estado (%)',
-                    data: [85, 90, 78, 95],
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
-                }]
+        // Configuración global de Chart.js
+        Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+        Chart.defaults.color = '#6c757d';
+        
+        // Inicialización del gráfico
+        const diagnosticChart = new Chart(
+            document.getElementById('diagnosticChart').getContext('2d'),
+            {
+                type: 'radar',
+                data: {
+                    labels: ['Motor', 'Transmisión', 'Frenos', 'Batería', 'Neumáticos', 'Suspensión'],
+                    datasets: [{
+                        label: 'Estado del Sistema',
+                        data: [92, 88, 95, 79, 85, 90],
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        });
+        );
 
-        // GitHub API: Últimos 3 commits
-        fetch('https://api.github.com/repos/MechBot-2x/demo-repository/commits')
-            .then(response => response.json())
-            .then(commits => {
-                let html = '<ul>';
-                commits.slice(0, 3).forEach(commit => {
-                    html += `<li>${commit.commit.message} <small>(${new Date(commit.commit.author.date).toLocaleString()})</small></li>`;
+        // Función para formatear fechas
+        const formatDate = (dateString) => {
+            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('es-ES', options);
+        };
+
+        // Carga de commits desde GitHub
+        const loadCommits = async () => {
+            try {
+                const response = await fetch('https://api.github.com/repos/MechBot-2x/demo-repository/commits', {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Authorization': 'token TU_TOKEN_AQUÍ' // Reemplazar con token real
+                    }
                 });
-                document.getElementById('commits').innerHTML = html + '</ul>';
-            });
-    </script>
-</body>
-</html>
+                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const commits = await response.json();
+                const commitsContainer = document.getElementById('commits');
+                
+                if (commits.length === 0) {
+                    commitsContainer.innerHTML = '<div class="alert alert-info">No hay commits recientes</div>';
+                    return;
+                }
+                
+                let html = '<div class="list-group">';
+                commits.slice(0, 5).forEach(commit => {
+                    html += `
+                        <a href="${commit.html_url}" target="_blank" class="list-group-item list-group-item-action commit-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">${commit.commit.message.split('\n')[0]}</h6>
+                                <small>${formatDate(commit.commit.author.date)}</small>
+                            </div>
+                            <small class="text-muted">Autor: ${commit.commit.author.name}</small>
+                        </a>
+                    `;
+                });
+                commitsContainer.innerHTML = html + '</div>';
+                
+            } catch (error) {
+                console.error('Error al cargar commits:', error);
+                document.getElementById('commits').innerHTML = `
+                    <div class="alert alert-danger">
+                        Error al cargar datos. <button onclick="loadCommits()" class="btn btn-sm btn-outline-danger">Reintentar</button>
+                    </div>
+                `;
+            }
+        };
