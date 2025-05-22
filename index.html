@@ -208,3 +208,19 @@
                 `;
             }
         };
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCommits();
+            
+            // Simulación de datos en tiempo real
+            setInterval(() => {
+                diagnosticChart.data.datasets[0].data = diagnosticChart.data.datasets[0].data.map(
+                    value => Math.max(70, Math.min(100, value + (Math.random() * 2 - 1))
+                );
+                diagnosticChart.update();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
