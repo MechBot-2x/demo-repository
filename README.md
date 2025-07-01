@@ -17,7 +17,8 @@ Dashboard interactivo para diagnóstico automotriz con:
 ## 🛠️ Cómo Usar  
 1. Clona el repo:  
    ```bash
-   git clone https://github.com/MechBot-2x/demo-repository](https://github.com/MechBot-2x/demo-repository.git)
+   git clone https://github.com/MechBot-2x/demo-repository.git
+   cd ~/demo-repository-1
    ```  
 2. Abre `index.html` en tu navegador o ejecuta:  
    ```bash
