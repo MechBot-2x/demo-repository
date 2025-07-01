@@ -1,4 +1,3 @@
-graph TD
     A[Crear proyecto] --> B[Desarrollo en main]
     B --> C{Preparar deploy}
     C --> |Sí| D[Crear rama gh-pages limpia]
