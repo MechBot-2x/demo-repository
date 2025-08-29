@@ -1,9 +1,9 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
+name: Create Bug report
+about: Create a report to help us improve create
+title: Echo
 labels: ''
-assignees: ''
+assignees: mechmind-dwv
 
 ---
 
