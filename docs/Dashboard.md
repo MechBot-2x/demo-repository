@@ -4,4 +4,4 @@
 Dashboard interactivo para diagnóstico automotriz con:  
 - 📊 Gráficos en tiempo real (Chart.js).  
 - 🔄 Integración con GitHub API.  
-- 🤖 Automatización con GitHub Actions.  
+- 🤖 Automatización con GitHub Actions.
